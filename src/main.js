@@ -13,6 +13,8 @@ const menu = [
 
 
 let selectedOrder = [];
+let orderCount = 0; // Contador de pedidos
+let orders = []; // Lista de pedidos completos
 
 // Crear función para renderizar el menú
 function renderMenu() {
@@ -104,6 +106,22 @@ function completeOrder() {
             row.innerHTML += ' ✅';
         }
     });
+
+    // Guardar el pedido completado
+    orders.push({
+        id: ++orderCount,
+        items: [...selectedOrder]
+    });
+
+    // Mostrar el botón de nuevo pedido
+    renderNewOrderButton();
+}
+
+// Crear función para iniciar un nuevo pedido
+function newOrder() {
+    selectedOrder = [];
+    renderOrder();
+    renderOrders();
 }
 
 // Crear función para renderizar el pedido
@@ -116,7 +134,7 @@ function renderOrder() {
         app.appendChild(orderDiv);
     }
 
-    orderDiv.innerHTML = '<h2>Pedido</h2>';
+    orderDiv.innerHTML = `<h2>Pedido Actual</h2>`;
 
     // Crear la tabla
     const table = document.createElement('table');
@@ -173,4 +191,76 @@ function renderOrder() {
     });
 }
 
+// Crear función para renderizar todos los pedidos
+function renderOrders() {
+    let ordersDiv = document.getElementById('orders');
+
+    if (!ordersDiv) {
+        ordersDiv = document.createElement('div');
+        ordersDiv.id = 'orders';
+        app.appendChild(ordersDiv);
+    }
+
+    ordersDiv.innerHTML = '<h2>Pedidos Completados</h2>';
+
+    orders.forEach(order => {
+        const orderDiv = document.createElement('div');
+        orderDiv.className = 'completed-order';
+        orderDiv.innerHTML = `<h3>Pedido #${order.id}</h3>`;
+
+        // Crear la tabla
+        const table = document.createElement('table');
+        table.className = 'order-table';
+
+        // Crear encabezados de la tabla
+        const header = document.createElement('thead');
+        header.innerHTML = `
+            <tr>
+                <th>Item</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+            </tr>
+        `;
+        table.appendChild(header);
+
+        // Crear cuerpo de la tabla
+        const body = document.createElement('tbody');
+
+        let total = 0;
+
+        order.items.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.quantity}</td>
+                <td>$${item.price * item.quantity}</td>
+            `;
+            body.appendChild(row);
+            total += item.price * item.quantity;
+        });
+
+        table.appendChild(body);
+        orderDiv.appendChild(table);
+
+        const totalDiv = document.createElement('div');
+        totalDiv.className = 'order-total';
+        totalDiv.innerHTML = `Total: $${total}`;
+        orderDiv.appendChild(totalDiv);
+
+        ordersDiv.appendChild(orderDiv);
+    });
+}
+
+// Crear función para renderizar el botón de nuevo pedido
+function renderNewOrderButton() {
+    let orderDiv = document.getElementById('order');
+
+    const newOrderButton = document.createElement('button');
+    newOrderButton.className = 'new-order-button';
+    newOrderButton.textContent = 'Nuevo Pedido';
+    newOrderButton.addEventListener('click', newOrder);
+    orderDiv.appendChild(newOrderButton);
+}
+
 renderMenu();
+renderOrder();

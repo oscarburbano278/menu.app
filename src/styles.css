@@ -47,7 +47,7 @@ input {
   font-weight: bold;
 }
 
-.complete-button {
+.complete-button, .new-order-button {
   margin-top: 10px;
   padding: 10px 20px;
   background-color: #4CAF50;
@@ -56,6 +56,26 @@ input {
   cursor: pointer;
 }
 
-.complete-button:hover {
+.complete-button:hover, .new-order-button:hover {
   background-color: #45a049;
+}
+
+.new-order-button {
+  background-color: #008CBA;
+}
+
+.new-order-button:hover {
+  background-color: #007BB5;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
 }
