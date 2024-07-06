@@ -1,0 +1,31 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: rgb(228, 205, 174);
+  display: flex;
+  justify-content: center;
+}
+
+.menu {
+  margin-bottom: 20px;
+}
+
+.menu-item {
+  margin: 10px 0;
+}
+
+.order {
+  margin-top: 20px;
+}
+
+.order-item {
+  margin: 5px 0;
+}
+
+.order-total {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+input {
+  width: 30px;
+}
