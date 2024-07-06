@@ -41,3 +41,21 @@ body {
 input {
   width: 70px;
 }
+
+.completed {
+  color: green;
+  font-weight: bold;
+}
+
+.complete-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.complete-button:hover {
+  background-color: #45a049;
+}

@@ -11,6 +11,7 @@ const menu = [
     { name: 'Criolla', price: 8000 },
 ];
 
+
 let selectedOrder = [];
 
 // Crear función para renderizar el menú
@@ -80,7 +81,7 @@ function addItem(index) {
 
             selectedOrder.push(orderItem);
         }
-        
+
         renderOrder();
 
         // Restablecer el valor del campo de cantidad a cero
@@ -92,6 +93,17 @@ function addItem(index) {
 function removeItem(index) {
     selectedOrder.splice(index, 1);
     renderOrder();
+}
+
+// Crear función para completar el pedido
+function completeOrder() {
+    selectedOrder.forEach((item, index) => {
+        const row = document.getElementById(`order-item-${index}`);
+        if (row) {
+            row.classList.add('completed');
+            row.innerHTML += ' ✅';
+        }
+    });
 }
 
 // Crear función para renderizar el pedido
@@ -129,6 +141,7 @@ function renderOrder() {
 
     selectedOrder.forEach((item, index) => {
         const row = document.createElement('tr');
+        row.id = `order-item-${index}`;
         row.innerHTML = `
             <td>${item.name}</td>
             <td>${item.quantity}</td>
@@ -146,6 +159,12 @@ function renderOrder() {
     totalDiv.className = 'order-total';
     totalDiv.innerHTML = `Total: $${total}`;
     orderDiv.appendChild(totalDiv);
+
+    const completeButton = document.createElement('button');
+    completeButton.className = 'complete-button';
+    completeButton.textContent = 'Completar Pedido';
+    completeButton.addEventListener('click', completeOrder);
+    orderDiv.appendChild(completeButton);
 
     // Añadir event listeners a los botones de eliminar
     selectedOrder.forEach((item, index) => {
