@@ -18,17 +18,38 @@ function renderMenu() {
     const menuDiv = document.createElement('div');
     menuDiv.className = 'menu';
 
+    // Crear la tabla
+    const table = document.createElement('table');
+    table.className = 'menu-table';
+
+    // Crear encabezados de la tabla
+    const header = document.createElement('thead');
+    header.innerHTML = `
+        <tr>
+            <th>Item</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Añadir</th>
+        </tr>
+    `;
+    table.appendChild(header);
+
+    // Crear cuerpo de la tabla
+    const body = document.createElement('tbody');
+
     menu.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'menu-item';
-        itemDiv.innerHTML = `
-            <span>${item.name} - $${item.price}</span>
-            <input type="number" min="0" id="quantity-${index}" placeholder="Cantidad">
-            <button id="add-btn-${index}">Añadir</button>
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>$${item.price}</td>
+            <td><input type="number" min="0" id="quantity-${index}" placeholder="Cantidad"></td>
+            <td><button id="add-btn-${index}">Añadir</button></td>
         `;
-        menuDiv.appendChild(itemDiv);
+        body.appendChild(row);
     });
 
+    table.appendChild(body);
+    menuDiv.appendChild(table);
     app.appendChild(menuDiv);
 
     // Añadir event listeners a los botones
@@ -44,15 +65,33 @@ function addItem(index) {
     const quantity = parseInt(quantityInput.value);
 
     if (quantity > 0) {
-        const orderItem = {
-            name: menu[index].name,
-            price: menu[index].price,
-            quantity: quantity,
-        };
+        const existingItemIndex = selectedOrder.findIndex(item => item.name === menu[index].name);
 
-        selectedOrder.push(orderItem);
+        if (existingItemIndex !== -1) {
+            // Si el ítem ya está en el pedido, actualizar la cantidad
+            selectedOrder[existingItemIndex].quantity += quantity;
+        } else {
+            // Si el ítem no está en el pedido, añadirlo
+            const orderItem = {
+                name: menu[index].name,
+                price: menu[index].price,
+                quantity: quantity,
+            };
+
+            selectedOrder.push(orderItem);
+        }
+        
         renderOrder();
+
+        // Restablecer el valor del campo de cantidad a cero
+        quantityInput.value = '';
     }
+}
+
+// Crear función para eliminar items del pedido
+function removeItem(index) {
+    selectedOrder.splice(index, 1);
+    renderOrder();
 }
 
 // Crear función para renderizar el pedido
@@ -66,22 +105,53 @@ function renderOrder() {
     }
 
     orderDiv.innerHTML = '<h2>Pedido</h2>';
+
+    // Crear la tabla
+    const table = document.createElement('table');
+    table.className = 'order-table';
+
+    // Crear encabezados de la tabla
+    const header = document.createElement('thead');
+    header.innerHTML = `
+        <tr>
+            <th>Item</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Acción</th>
+        </tr>
+    `;
+    table.appendChild(header);
+
+    // Crear cuerpo de la tabla
+    const body = document.createElement('tbody');
+
     let total = 0;
 
-    selectedOrder.forEach(item => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'order-item';
-        itemDiv.innerHTML = `
-            <span>${item.name} - ${item.quantity} x $${item.price}</span>
+    selectedOrder.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>$${item.price * item.quantity}</td>
+            <td><button id="remove-btn-${index}">Eliminar</button></td>
         `;
-        orderDiv.appendChild(itemDiv);
+        body.appendChild(row);
         total += item.price * item.quantity;
     });
+
+    table.appendChild(body);
+    orderDiv.appendChild(table);
 
     const totalDiv = document.createElement('div');
     totalDiv.className = 'order-total';
     totalDiv.innerHTML = `Total: $${total}`;
     orderDiv.appendChild(totalDiv);
+
+    // Añadir event listeners a los botones de eliminar
+    selectedOrder.forEach((item, index) => {
+        const removeButton = document.getElementById(`remove-btn-${index}`);
+        removeButton.addEventListener('click', () => removeItem(index));
+    });
 }
 
 renderMenu();

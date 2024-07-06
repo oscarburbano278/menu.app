@@ -1,6 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   background-color: rgb(228, 205, 174);
+  margin: 20px;
   display: flex;
   justify-content: center;
 }
@@ -9,8 +10,19 @@ body {
   margin-bottom: 20px;
 }
 
-.menu-item {
-  margin: 10px 0;
+.menu-table, .order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.menu-table th, .menu-table td, .order-table th, .order-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.menu-table th, .order-table th {
+  background-color: #f2f2f2;
 }
 
 .order {
@@ -27,5 +39,5 @@ body {
 }
 
 input {
-  width: 30px;
+  width: 70px;
 }
