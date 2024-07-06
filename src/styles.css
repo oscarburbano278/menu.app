@@ -6,13 +6,22 @@ body {
   justify-content: center;
 }
 
-.menu {
+input {
+  width: 70px;
+}
+
+h1, h2 {
+  color: #333;
+}
+
+.menu, .order, .orders, .search-order {
   margin-bottom: 20px;
 }
 
 .menu-table, .order-table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 10px;
 }
 
 .menu-table th, .menu-table td, .order-table th, .order-table td {
@@ -25,57 +34,60 @@ body {
   background-color: #f2f2f2;
 }
 
-.order {
-  margin-top: 20px;
-}
-
-.order-item {
-  margin: 5px 0;
-}
-
-.order-total {
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-input {
-  width: 70px;
-}
-
-.completed {
-  color: green;
-  font-weight: bold;
-}
-
-.complete-button, .new-order-button {
-  margin-top: 10px;
-  padding: 10px 20px;
+.complete-button, .save-button, .new-order-button, .edit-order-button, .remove-item-button, .add-item-button {
   background-color: #4CAF50;
   color: white;
   border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
-.complete-button:hover, .new-order-button:hover {
+.complete-button:hover, .save-button:hover, .new-order-button:hover, .edit-order-button:hover, .remove-item-button:hover, .add-item-button:hover {
   background-color: #45a049;
 }
 
-.new-order-button {
-  background-color: #008CBA;
+.order-total {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
-.new-order-button:hover {
-  background-color: #007BB5;
+.completed {
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
 }
 
-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
+.order-item button {
+  margin-left: 10px;
 }
 
-th, td {
+.search-order input {
   padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.search-order button {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.search-order button:hover {
+  background-color: #007bb5;
 }
